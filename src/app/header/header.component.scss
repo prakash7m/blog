@@ -1,0 +1,15 @@
+@import 'vars';
+.header-nav {
+  height: 70px;
+  box-sizing: border-box;
+  background: $header-bg;
+  &.styled {
+    border-bottom: 1px solid #eee;
+  }
+  h1 {
+    color: $base-color;
+  }
+  a {
+    font-weight: bold;
+  }
+}
