@@ -8,6 +8,9 @@ import { HeaderComponent } from './header/header.component';
 import { HeroComponent } from './hero/hero.component';
 import { CategoryTilesComponent } from './category-tiles/category-tiles.component';
 import { FooterComponent } from './footer/footer.component';
+import { SubscribeComponent } from './subscribe/subscribe.component';
+import { PostTilesComponent } from './post-tiles/post-tiles.component';
+import { CategoryHeroComponent } from './category-hero/category-hero.component';
 
 
 @NgModule({
@@ -16,7 +19,10 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     HeroComponent,
     CategoryTilesComponent,
-    FooterComponent
+    FooterComponent,
+    SubscribeComponent,
+    PostTilesComponent,
+    CategoryHeroComponent
   ],
   imports: [
     BrowserModule,
