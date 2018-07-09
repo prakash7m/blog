@@ -9,7 +9,9 @@
   h1 {
     color: $base-color;
   }
-  a {
-    font-weight: bold;
+  a.logo-text {
+    &:hover {
+      text-decoration: none;
+    }
   }
 }

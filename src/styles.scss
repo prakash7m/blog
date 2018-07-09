@@ -15,10 +15,16 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: $base-color;
   &:hover {
-    color: darken($base-color, 10);
-    text-decoration: none;
+    color: $base-color;
+    // text-decoration: none;
   }
   &:active {
     color: $base-color;
   }
+}
+
+.card-footer {
+  background-color: #fff;
+  border: 0px;
+  border-bottom: 1px solid #eee;
 }
