@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HeroComponent } from './hero/hero.component';
@@ -19,6 +19,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { PostsHomeComponent } from './posts-home/posts-home.component';
 import { PostsHomeContainerComponent } from './posts-home-container/posts-home-container.component';
 import { PostContainerComponent } from './post-container/post-container.component';
+import { HttpModule } from '@angular/http';
+import { ArticleService } from './article/article.service';
 
 
 @NgModule({
@@ -42,9 +44,11 @@ import { PostContainerComponent } from './post-container/post-container.componen
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule,
+    MarkdownModule.forRoot()
   ],
-  providers: [],
+  providers: [ArticleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

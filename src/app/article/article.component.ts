@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ArticleService } from './article.service';
+import { MarkdownService } from 'ngx-markdown';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'b-article',
@@ -6,10 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./article.component.scss']
 })
 export class ArticleComponent implements OnInit {
-
-  constructor() { }
+  article$: Observable<string> = this.articleService.getArticle();
+  constructor(private articleService: ArticleService) { }
 
   ngOnInit() {
   }
-
 }
