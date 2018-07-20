@@ -2,8 +2,20 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700');
 @import url('https://fonts.googleapis.com/css?family=Exo:300,400,500,600,700');
 @import "../node_modules/prismjs/themes/prism-tomorrow.css";
-@import 'vars';
+$fa-font-path: "./assets/fonts/FontAwesome"; 
+@import "../node_modules/font-awesome/scss/font-awesome.scss";
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700');
+@import url('https://fonts.googleapis.com/css?family=Exo:300,400,500,600,700');
+@import 'vars';
+// If you want to override variables do it here
+@import "../node_modules/@coreui/icons/css/coreui-icons.css";
+@import "../node_modules/flag-icon-css/css/flag-icon.css";
+@import "../node_modules/simple-line-icons/css/simple-line-icons.css";
+@import "styles/style";
 body {
   margin: 0px;
   padding: 0px;
@@ -28,4 +40,19 @@ a {
   background-color: #fff;
   border: 0px;
   border-bottom: 1px solid #eee;
+}
+
+.center-box{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:99;
+  margin:auto;
+  height:200px;
+  width:200px;
+  border:1px solid #000;
+  text-align:center;
+  line-height:200px;
 }

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PostsHomeContainerComponent } from './posts-home-container/posts-home-container.component';
-import { PostComponent } from './post/post.component';
 
 const routes: Routes = [{
-  path: '', component: PostsHomeContainerComponent
+  path: '', loadChildren: './frontend/frontend.module#FrontendModule'
 }, {
-  path: 'post', component: PostComponent
+  path: 'admin', loadChildren: './admin-portal/admin-portal.module#AdminPortalModule'
 }];
 
 @NgModule({
