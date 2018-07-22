@@ -38,7 +38,12 @@ export class LoginComponent implements OnInit {
         username: this.formGroup.get('username').value,
         password: this.formGroup.get('password').value
       });
-      this.router.navigate(['/admin']);
+      if (response.data) {
+        this.router.navigate(['/admin']);
+      } else {
+        this.errorMessage = response.message;
+      }
+      
     } catch (e) {
       response = this.globalErrorHandler.handleError(e);
       this.errorMessage = response.message;
@@ -48,14 +53,14 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit() {
-    try {
-      const authenticated = await this.authenticationService.isAuthenticated();
-      if (authenticated) {
-        this.router.navigateByUrl('/admin');
-      }
-    } catch (err) {
+    // try {
+    //   const authenticated = await this.authenticationService.isAuthenticated();
+    //   if (authenticated) {
+    //     this.router.navigateByUrl('/admin');
+    //   }
+    // } catch (err) {
 
-    }
+    // }
   }
 
 }

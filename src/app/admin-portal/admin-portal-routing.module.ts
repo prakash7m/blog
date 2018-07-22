@@ -14,10 +14,10 @@ const routes: Routes = [{
 }, {
   path: '',
   component: DefaultLayoutComponent,
+  canActivate: [AuthenticationGuard],
   children: [{
     path: '',
-    component: AdminHomeComponent,
-    canActivate: [AuthenticationGuard]
+    component: AdminHomeComponent
   }]
 }];
 

@@ -10,7 +10,11 @@ export class AuthenticationGuard implements CanActivate {
 
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     try {
-      return await this.authenticationService.isAuthenticated();
+      const authenticated = await this.authenticationService.isAuthenticated();
+      if (!authenticated) {
+        this.router.navigateByUrl('/admin/login');
+      }
+      return authenticated;
     } catch (err) {
       this.router.navigateByUrl('/admin/login');
       return false;

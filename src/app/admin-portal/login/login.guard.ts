@@ -8,9 +8,10 @@ export class LoginGuard implements CanActivate {
 
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     try {
-      const authenticated = await !this.authenticationService.isAuthenticated();
+      const authenticated = await this.authenticationService.isAuthenticated();
       if (authenticated) {
         this.router.navigateByUrl('/admin');
+        return false;
       } else {
         return true;
       }
