@@ -18,6 +18,9 @@ const routes: Routes = [{
   children: [{
     path: '',
     component: HomeComponent
+  }, {
+    path: 'users',
+    loadChildren: './users/users.module#UsersModule'
   }]
 }];
 

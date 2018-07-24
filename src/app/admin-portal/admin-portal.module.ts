@@ -27,6 +27,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { LoginGuard } from './login/login.guard';
+import { UsersModule } from './users/users.module';
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -50,7 +51,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    UsersModule
   ],
   providers: [AuthenticationService, AuthenticationGuard, GlobalErrorHandler, LoginGuard],
   declarations: [LoginComponent, AdminPortalComponent, HomeComponent, AdminHeaderComponent, ...APP_CONTAINERS]
