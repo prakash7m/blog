@@ -17,7 +17,7 @@ import { AdminPortalComponent } from './admin-portal.component';
 import { AuthenticationService } from './core/authentication.service';
 import { AuthenticationGuard } from './core/authentication.guard';
 import { GlobalErrorHandler } from './core/global-error-handler';
-import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { HomeComponent } from './admin-home/admin-home.component';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { DefaultLayoutComponent } from './containers';
 
@@ -53,6 +53,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChartsModule
   ],
   providers: [AuthenticationService, AuthenticationGuard, GlobalErrorHandler, LoginGuard],
-  declarations: [LoginComponent, AdminPortalComponent, AdminHomeComponent, AdminHeaderComponent, ...APP_CONTAINERS]
+  declarations: [LoginComponent, AdminPortalComponent, HomeComponent, AdminHeaderComponent, ...APP_CONTAINERS]
 })
 export class AdminPortalModule { }

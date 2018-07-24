@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import { GlobalErrorHandler } from '../core/global-error-handler';
 import { Router } from '@angular/router';
+import { HandledErrorResponse } from '../core/response.model';
+import { UserModel } from '../core/user.model';
 
 @Component({
   selector: 'b-login',
@@ -29,7 +31,6 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit(): Promise<any> {
-    this.info = {};
     this.errorMessage = '';
     this.isProgress = true;
     let response;
@@ -43,12 +44,9 @@ export class LoginComponent implements OnInit {
       } else {
         this.errorMessage = response.message;
       }
-      
-    } catch (e) {
-      response = this.globalErrorHandler.handleError(e);
-      this.errorMessage = response.message;
+    } catch (err) {
+      this.errorMessage = err.message;
     }
-    this.info = response;
     this.isProgress = false;
   }
 

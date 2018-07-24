@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../core/authentication.service';
 
 @Component({
-  selector: 'b-admin-home',
+  selector: 'b-home',
   templateUrl: './admin-home.component.html',
   styleUrls: ['./admin-home.component.scss']
 })
-export class AdminHomeComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 

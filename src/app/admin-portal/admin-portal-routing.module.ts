@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminPortalComponent } from './admin-portal.component';
 import { LoginComponent } from './login/login.component';
-import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { HomeComponent } from './admin-home/admin-home.component';
 import { AuthenticationGuard } from './core/authentication.guard';
 import { DefaultLayoutComponent } from './containers';
 import { LoginGuard } from './login/login.guard';
@@ -17,7 +17,7 @@ const routes: Routes = [{
   canActivate: [AuthenticationGuard],
   children: [{
     path: '',
-    component: AdminHomeComponent
+    component: HomeComponent
   }]
 }];
 

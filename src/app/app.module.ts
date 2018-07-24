@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { MarkdownModule } from 'ngx-markdown';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
+import { GlobalErrorHandler } from './admin-portal/core/global-error-handler';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,10 @@ import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angu
     HttpModule,
     MarkdownModule.forRoot()
   ],
-  providers: [],
+  providers: [{
+    provide: ErrorHandler,
+    useClass: GlobalErrorHandler
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
