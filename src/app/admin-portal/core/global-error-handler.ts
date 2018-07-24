@@ -83,7 +83,7 @@ export class GlobalErrorHandler extends ErrorHandler {
     }
     const err: HandledErrorResponse<ErrorType> = {
       success: false,
-      message: errorResponse.error.message,
+      message: errorResponse.error.message || errorResponse.statusText,
       errors: errorResponse.error.errors,
       statusCode: errorResponse.status,
       statusText: errorResponse.statusText

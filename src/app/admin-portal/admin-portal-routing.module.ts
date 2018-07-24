@@ -17,9 +17,11 @@ const routes: Routes = [{
   canActivate: [AuthenticationGuard],
   children: [{
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    data: { title: 'Home' },
   }, {
     path: 'users',
+    data: { title: 'Users' },
     loadChildren: './users/users.module#UsersModule'
   }]
 }];
