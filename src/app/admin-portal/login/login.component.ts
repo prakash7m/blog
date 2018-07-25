@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import { GlobalErrorHandler } from '../core/global-error-handler';
 import { Router } from '@angular/router';
-import { HandledErrorResponse } from '../core/response.model';
+import { HandledErrorResponse, DataResponse } from '../core/response.model';
 import { UserModel } from '../core/user.model';
 
 @Component({
@@ -13,7 +13,7 @@ import { UserModel } from '../core/user.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   errorMessage: string;
   formGroup: FormGroup;
   info: {};
@@ -33,9 +33,8 @@ export class LoginComponent implements OnInit {
   async onSubmit(): Promise<any> {
     this.errorMessage = '';
     this.isProgress = true;
-    let response;
     try {
-      response = await this.authenticationService.authenticate({
+      const response = <DataResponse<UserModel>>await this.authenticationService.authenticate({
         username: this.formGroup.get('username').value,
         password: this.formGroup.get('password').value
       });
@@ -49,16 +48,4 @@ export class LoginComponent implements OnInit {
     }
     this.isProgress = false;
   }
-
-  async ngOnInit() {
-    // try {
-    //   const authenticated = await this.authenticationService.isAuthenticated();
-    //   if (authenticated) {
-    //     this.router.navigateByUrl('/admin');
-    //   }
-    // } catch (err) {
-
-    // }
-  }
-
 }

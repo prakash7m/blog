@@ -23,6 +23,16 @@ export interface DataResponse<D> extends StandardResponse {
 }
 
 /**
+ * Additional optional properties of each rows which is merged to typed model
+ *
+ * @export
+ * @interface Row
+ */
+export interface Row {
+  link?: string;
+}
+
+/**
  * The generic rows response which has basic success and message property and a rows property to return list of items
  * Mostly useful to return list of models
  *
@@ -32,7 +42,7 @@ export interface DataResponse<D> extends StandardResponse {
  * @template R
  */
 export interface RowsResponse<R> extends StandardResponse {
-  rows: R;
+  rows: R[] & Row[];
 }
 
 /**

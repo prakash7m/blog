@@ -27,10 +27,10 @@ export class AuthenticationService {
    * Creates an instance of AuthenticationService.
    * @param {HttpClient} http
    * @param {Router} router
-   * @param {GlobalErrorHandler} errorHandler
+   * @param {GlobalErrorHandler} globalErrorHandler
    * @memberof AuthenticationService
    */
-  constructor(private http: HttpClient, private router: Router, private errorHandler: GlobalErrorHandler) { }
+  constructor(private http: HttpClient, private router: Router, private globalErrorHandler: GlobalErrorHandler) { }
 
   /**
    * Makes api call to server to check the logged in state of the user.
@@ -51,7 +51,7 @@ export class AuthenticationService {
       })
       .catch((err: any, caught: Observable<boolean>) => {
         this.recentAuthStatus = false;
-        return this.errorHandler.handleError(err);
+        return this.globalErrorHandler.handleError(err);
       })
       .toPromise();
   }
@@ -72,7 +72,7 @@ export class AuthenticationService {
       })
       .catch((err: any, caught: Observable<DataResponse<UserModel>>) => {
         this.recentAuthStatus = false;
-        return this.errorHandler.handleError(err);
+        return this.globalErrorHandler.handleError(err);
       })
       .toPromise();
   }
@@ -92,7 +92,7 @@ export class AuthenticationService {
       })
       .catch((err: any, caught: Observable<StandardResponse>) => {
         this.recentAuthStatus = false;
-        return this.errorHandler.handleError(err);
+        return this.globalErrorHandler.handleError(err);
       })
       .toPromise();
   }
