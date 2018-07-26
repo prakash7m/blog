@@ -23,6 +23,12 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
     text: 'Email'
   }];
   emptyText = 'Users not found';
+  actions = [{
+    text: 'Delete',
+    handler: function (row, event) {
+      console.log(row);
+    }
+  }];
   constructor(private usersService: UsersService) { super(); }
 
   async ngOnInit() {

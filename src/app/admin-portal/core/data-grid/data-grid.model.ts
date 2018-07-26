@@ -10,3 +10,9 @@ export interface Row {
   editable?: boolean;
   deletable?: boolean;
 }
+
+export interface Action {
+  text: string;
+  link?: string;
+  handler(event: Event, row: Row);
+}

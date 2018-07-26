@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Column, Row } from './data-grid.model';
+import { Column, Row, Action } from './data-grid.model';
 
 @Component({
   selector: 'b-data-grid',
@@ -11,6 +11,7 @@ export class DataGridComponent<T = any> implements OnInit {
   @Input() rows: T[] & Row[] = [];
   @Input() emptyText = 'No Data';
   @Input() errorMessage: string;
+  @Input() actions: Action[];
   constructor() { }
 
   ngOnInit() {

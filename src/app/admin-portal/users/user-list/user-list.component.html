@@ -1,1 +1,18 @@
-<b-data-grid [columns]="columns" [rows]="rows" [emptyText]="emptyText" [errorMessage]="errorMessage"></b-data-grid>
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" routerLink="/admin/users/create">Add</a>
+  </li>
+</ul>
+<b-data-grid [columns]="columns" [rows]="rows" [emptyText]="emptyText" [errorMessage]="errorMessage" [actions]="actions">
+  <div class="small">
+    <div *ngFor="let row of rows" class="card card-accent-primary">
+      <div class="card-header">
+        {{row.username}}
+      </div>
+      <div class="card-body">
+        <p>{{row.username}}</p>
+        <p>{{row.email}}</p>
+      </div>
+    </div>
+  </div>
+</b-data-grid>
