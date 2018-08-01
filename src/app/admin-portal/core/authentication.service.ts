@@ -8,6 +8,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/util/pipe';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import storage from 'local-storage-fallback';
+
 import { UserModel } from './user.model';
 import { DataResponse, HandledErrorResponse, StandardResponse } from './response.model';
 import { apiURL } from '../config';
@@ -40,17 +42,18 @@ export class AuthenticationService {
    * @memberof AuthenticationService
    */
   async isAuthenticated(): Promise<boolean | HandledErrorResponse> {
-    if (this.recentAuthStatus !== null) {
-      return Observable.of(this.recentAuthStatus).toPromise();
+    const a = storage.getItem('recent-auth-state');
+    if (storage.getItem('recent-auth-state')) {
+      return Observable.of(true).toPromise();
     }
     return this.http.get<DataResponse<UserModel>>(`${apiURL}/isauthenticated`, { withCredentials: true })
       .map((res: DataResponse<UserModel>) => {
         this.user = res.data;
-        this.recentAuthStatus = true;
+        storage.setItem('recent-auth-state', '1');
         return true;
       })
       .catch((err: any, caught: Observable<boolean>) => {
-        this.recentAuthStatus = false;
+        this.setNotAuthenticated();
         return this.globalErrorHandler.handleError(err);
       })
       .toPromise();
@@ -67,11 +70,11 @@ export class AuthenticationService {
     return this.http.post<DataResponse<UserModel>>(`${apiURL}/login`, { username, password }, { withCredentials: true })
       .map((res: DataResponse<UserModel>) => {
         this.user = res.data;
-        this.recentAuthStatus = true;
+        storage.setItem('recent-auth-state', '1');
         return res;
       })
       .catch((err: any, caught: Observable<DataResponse<UserModel>>) => {
-        this.recentAuthStatus = false;
+        this.setNotAuthenticated();
         return this.globalErrorHandler.handleError(err);
       })
       .toPromise();
@@ -86,14 +89,18 @@ export class AuthenticationService {
   async logout(): Promise<StandardResponse | HandledErrorResponse> {
     return this.http.get(`${apiURL}/logout`, { withCredentials: true })
       .map((res: StandardResponse) => {
-        this.user = null;
-        this.recentAuthStatus = false;
+        this.setNotAuthenticated();
         return res;
       })
       .catch((err: any, caught: Observable<StandardResponse>) => {
-        this.recentAuthStatus = false;
+        this.setNotAuthenticated();
         return this.globalErrorHandler.handleError(err);
       })
       .toPromise();
+  }
+
+  setNotAuthenticated() {
+    this.user = null;
+    storage.setItem('recent-auth-state', '');
   }
 }

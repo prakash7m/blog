@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../core/authentication.service';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import { GlobalErrorHandler } from '../core/global-error-handler';
-import { Router } from '@angular/router';
-import { HandledErrorResponse, DataResponse } from '../core/response.model';
+import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
+import { DataResponse } from '../core/response.model';
 import { UserModel } from '../core/user.model';
 
 @Component({
@@ -22,7 +21,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private globalErrorHandler: GlobalErrorHandler,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.formGroup = fb.group({
       username: [null, Validators.required],
@@ -39,7 +39,12 @@ export class LoginComponent {
         password: this.formGroup.get('password').value
       });
       if (response.data) {
-        this.router.navigate(['/admin']);
+        const referer = this.route.snapshot.queryParamMap.get('r');
+        if (referer) {
+          this.router.navigateByUrl(referer);
+        } else {
+          this.router.navigate(['/admin']);
+        }
       } else {
         this.errorMessage = response.message;
       }

@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { MarkdownModule } from 'ngx-markdown';
 import { HttpModule } from '@angular/http';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +17,9 @@ import { GlobalErrorHandler } from './admin-portal/core/global-error-handler';
     BrowserModule,
     AppRoutingModule,
     HttpModule,
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([])
   ],
   providers: [{
     provide: ErrorHandler,

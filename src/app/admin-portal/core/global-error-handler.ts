@@ -1,9 +1,11 @@
 import { Injector, ErrorHandler, Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, ObservableInput } from 'rxjs/Observable';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import storage from 'local-storage-fallback';
+
 import { HandledErrorResponse } from './response.model';
+import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 
 /**
  * The global error handler extending ErrorHandler.
@@ -77,9 +79,13 @@ export class GlobalErrorHandler extends ErrorHandler {
    */
   handleStatus<ErrorType>(errorResponse: HttpErrorResponse, status: number): Observable<HandledErrorResponse<ErrorType>> {
     console.warn('Status Error Response');
-    const router = this.injector.get(Router);
+    const route = this.injector.get(ActivatedRoute);
     if (status === 401) {
-      router.navigateByUrl('/admin/login');
+      const recentAuthState = storage.getItem('recent-auth-state');
+      if (recentAuthState) {
+        storage.setItem('recent-auth-state', '');
+        window.location.href = '/admin/login?r=' + window.location.pathname;
+      }
     }
     const err: HandledErrorResponse<ErrorType> = {
       success: false,

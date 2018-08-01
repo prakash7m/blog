@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { navItems } from './../../_nav';
+import { navItems } from '../../_nav';
 import { AuthenticationService } from '../../core/authentication.service';
 
 

@@ -4,7 +4,7 @@ import { AuthenticationService } from './authentication.service';
 import { AuthenticationGuard } from './authentication.guard';
 import { GlobalErrorHandler } from './global-error-handler';
 import { DataGridComponent } from './data-grid/data-grid.component';
-import { RouterModule } from '../../../../node_modules/@angular/router';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
