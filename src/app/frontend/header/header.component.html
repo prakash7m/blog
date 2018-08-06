@@ -1,9 +1,11 @@
-<header class="border-bottom" [class.off-canvas]="cssOffCanvas" [class.fixed]="cssFixed" #headercmp>
+<header class="border-bottom" [class.off-canvas]="cssOffCanvas"
+  [class.fixed]="cssFixed" #headercmp>
   <div class="container">
     <div class="header-nav styled d-flex align-items-center">
       <div class="p-2 mr-auto">
         <h1>
-          <a class="hamburger d-inline-block d-md-none" (click)="burgerClosed=!burgerClosed;">
+          <a class="hamburger d-inline-block d-md-none"
+            (click)="burgerClosed=!burgerClosed;">
             <i class="fa fa-bars" [class.fa-rotate-90]="!burgerClosed"></i>
           </a>
           <a href="" class="logo-text">
@@ -34,12 +36,14 @@
 
 </header>
 <div class="hamburger-menu d-md-none" [class.closed]="burgerClosed">
+  <div class="header-space"></div>
   <div class="container">
-  <a href="#">Home</a>
-  <a href="#">Posts</a>
-  <a href="#">Popular</a>
-  <a href="#">About</a>
-  <a href="#">Contact</a>
-  <a href="#">Login</a>
+    <a href="#">Home</a>
+    <a href="#">Posts</a>
+    <a href="#">Popular</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+    <a href="#">Login</a>
+  </div>  
 </div>
-</div>
+<div class="hamburger-menu-mask d-md-none" [class.active]="!burgerClosed"></div>

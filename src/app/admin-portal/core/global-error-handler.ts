@@ -83,7 +83,9 @@ export class GlobalErrorHandler extends ErrorHandler {
     if (status === 401) {
       const recentAuthState = storage.getItem('recent-auth-state');
       if (recentAuthState) {
-        storage.setItem('recent-auth-state', '');
+        storage.setItem('recent-auth-state', '');        
+      }
+      if (window.location.pathname !== '/admin/login') {
         window.location.href = '/admin/login?r=' + window.location.pathname;
       }
     }
