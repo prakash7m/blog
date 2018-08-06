@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, Inject, ViewChild, ElementRef } from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
+import { WINDOW } from '../../shared/window.service';
+
 
 @Component({
   selector: 'b-header',
@@ -6,10 +9,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor() { }
+  @ViewChild('headercmp') headerCmp: ElementRef;
+  biggerHeight: boolean;
+  cssFixed: boolean;
+  cssOffCanvas: boolean;
+  lastScrollTop = 0;
+  burgerClosed = true;
+  constructor(@Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window: Window) { }
 
   ngOnInit() {
   }
 
+  @HostListener('window:scroll')
+  onscroll() {
+    const number = this.window.pageYOffset || this.document.documentElement.scrollTop || this.document.body.scrollTop || 0;
+    const headerHeight = this.headerCmp.nativeElement.offsetHeight;
+    let scrollDown = false;
+    if (number > this.lastScrollTop) {
+      // scrolling down
+      scrollDown = true;
+    } else {
+      // scrolling up
+      scrollDown = false;
+    }
+    this.cssOffCanvas = number > headerHeight;
+    this.biggerHeight = number < headerHeight;
+    this.cssFixed = !scrollDown;
+    this.lastScrollTop = number;
+  }
 }

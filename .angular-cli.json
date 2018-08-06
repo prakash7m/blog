@@ -18,9 +18,7 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "b",
-      "styles": [
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        
+      "styles": [        
         "styles.scss"
       ],
       "stylePreprocessorOptions": {
