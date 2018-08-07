@@ -16,6 +16,10 @@ const routes: Routes = [{
     path: 'create',
     component: UserFormComponent,
     data: { title: 'User Create' }
+  }, {
+    path: 'edit',
+    component: UserFormComponent,
+    data: { title: 'User Edit' }
   }]
 
 }];

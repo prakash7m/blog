@@ -18,7 +18,7 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
   columns: Column[] = [{
     dataIndex: 'username',
     text: 'Username',
-    link: '/admin/user/edit'
+    link: 'edit'
   }, {
     dataIndex: 'fullname',
     text: 'Full Name'

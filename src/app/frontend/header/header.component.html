@@ -1,5 +1,5 @@
-<header class="border-bottom" [class.off-canvas]="cssOffCanvas"
-  [class.fixed]="cssFixed" #headercmp>
+<header [class.border-bottom]="cssOffCanvas" [class.off-canvas]="cssOffCanvas"
+  [class.fixed]="cssFixed" [class.is-scrolled]="isScrolled" #headercmp>
   <div class="container">
     <div class="header-nav styled d-flex align-items-center">
       <div class="p-2 mr-auto">
@@ -9,7 +9,7 @@
             <i class="fa fa-bars" [class.fa-rotate-90]="!burgerClosed"></i>
           </a>
           <a href="" class="logo-text">
-            <span class="green">JS</span><span>Blog</span>
+            <span class="green">JS</span><span>B</span>
           </a>
         </h1>
       </div>

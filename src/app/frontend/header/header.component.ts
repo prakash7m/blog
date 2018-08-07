@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   cssFixed: boolean;
   cssOffCanvas: boolean;
   lastScrollTop = 0;
+  isScrolled: boolean;
   _burgerClosed = true;
 
   get burgerClosed() {
@@ -26,7 +27,6 @@ export class HeaderComponent implements OnInit {
   constructor(@Inject(DOCUMENT) private document: Document, @Inject(WINDOW) private window: Window) { }
 
   ngOnInit() {
-    
   }
 
   @HostListener('window:scroll')
@@ -45,5 +45,6 @@ export class HeaderComponent implements OnInit {
     this.biggerHeight = number < headerHeight;
     this.cssFixed = this.burgerClosed && !scrollDown;
     this.lastScrollTop = number;
+    this.isScrolled = number > headerHeight;
   }
 }

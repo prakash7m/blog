@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hero.component.scss']
 })
 export class HeroComponent implements OnInit {
-
+  bgImages = ['empty.jpg', 'js.png', 'node-wallpaper.jpg', 'node.png', 'ximage.jpg'];
+  bgImage = null;
   constructor() { }
 
   ngOnInit() {
+    this.bgImage = `url(/assets/img/covers/empty.jpg)`; // ${this.bgImages[Math.floor(Math.random() * 5)]})`;
   }
 
 }
