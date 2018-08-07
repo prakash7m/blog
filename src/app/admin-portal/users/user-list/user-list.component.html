@@ -1,9 +1,10 @@
 <ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link active" routerLink="/admin/users/create">Add</a>
+    <a class="nav-link active" routerLink="/admin/users/create"><i class="fa fa-plus"></i> Add</a>
   </li>
 </ul>
-<b-data-grid [columns]="columns" [rows]="rows" [emptyText]="emptyText" [errorMessage]="errorMessage" [actions]="actions">
+<b-data-grid [columns]="columns" [rows]="rows" [emptyText]="emptyText"
+  [errorMessage]="errorMessage" [actions]="actions">
   <div class="small">
     <div *ngFor="let row of rows" class="card card-accent-primary">
       <div class="card-header">
@@ -16,3 +17,8 @@
     </div>
   </div>
 </b-data-grid>
+<ul class="nav footer nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" href="javascript:void(0)" (click)="loadUsers()"><i class="fa fa-refresh"></i> Refresh</a>
+  </li>
+</ul>

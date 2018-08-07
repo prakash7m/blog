@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hero.component.scss']
 })
 export class HeroComponent implements OnInit {
-  bgImages = ['empty.jpg', 'js.png', 'node-wallpaper.jpg', 'node.png', 'ximage.jpg'];
+  bgImages = ['empty.jpg', 'js.png', 'node-wallpaper.jpg', 'node.png', 'ximage.jpg', 'maxresdefault.jpg'];
   bgImage = null;
   constructor() { }
 

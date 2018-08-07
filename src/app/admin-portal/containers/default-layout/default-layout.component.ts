@@ -7,7 +7,8 @@ import { AuthenticationService } from '../../core/authentication.service';
 
 @Component({
   selector: 'b-dashboard',
-  templateUrl: './default-layout.component.html'
+  templateUrl: './default-layout.component.html',
+  styleUrls: ['./default-layout.component.scss']
 })
 export class DefaultLayoutComponent {
   public navItems = navItems;

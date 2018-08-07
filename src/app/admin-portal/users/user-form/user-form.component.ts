@@ -14,6 +14,7 @@ import { UserModel } from '../../core/user.model';
 })
 export class UserFormComponent implements OnInit {
   formGroup: FormGroup;
+  errorMsg: string;
   constructor(private fb: FormBuilder, private userService: UsersService, private router: Router) {
     const passwordControl: FormControl = new FormControl(null, [Validators.required, Validators.minLength(5)]);
     this.formGroup = this.fb.group({
@@ -44,6 +45,7 @@ export class UserFormComponent implements OnInit {
       }
     } catch (err) {
       console.log(err);
+      this.errorMsg = err.message;
     }
   }
   validateAllFormFields(formGroup: FormGroup) {         // {1}

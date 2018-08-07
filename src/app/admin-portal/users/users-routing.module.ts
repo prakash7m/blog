@@ -17,7 +17,7 @@ const routes: Routes = [{
     component: UserFormComponent,
     data: { title: 'User Create' }
   }, {
-    path: 'edit',
+    path: 'edit/:id',
     component: UserFormComponent,
     data: { title: 'User Edit' }
   }]

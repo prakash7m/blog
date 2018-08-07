@@ -17,4 +17,8 @@ export class DataGridComponent<T = any> implements OnInit {
   ngOnInit() {
   }
 
+  linkWithId (column, row) {
+    return `${column.link}/${row._id}`;
+  }
+
 }

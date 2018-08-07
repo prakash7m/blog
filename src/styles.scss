@@ -76,3 +76,23 @@ a {
 section {
   background: #fff;
 }
+
+.error-msg {
+  color: #ff0000;
+  padding: 0px 10px;
+}
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+fieldset {
+  border: 1px solid #ccc;
+  padding: 20px;
+  legend {
+    width: auto;
+    padding: 0px 10px;
+    font-size: 20px;
+  }
+}
