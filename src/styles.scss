@@ -60,7 +60,6 @@ a {
 
 .form-panel {
   padding: 10px;
-  border: 1px solid #eee;
   margin: 10px;
 }
 
@@ -94,5 +93,37 @@ fieldset {
     width: auto;
     padding: 0px 10px;
     font-size: 20px;
+  }
+}
+
+.mask-parent {
+  position: relative;
+  display: block;
+  .mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .mask-msg {
+      background: #eee;
+      padding: 10px 20px;
+      border: 1px solid #888;
+      border-radius: 5px;
+      i {
+        font-size: 35px;
+        padding: 0px 10px;
+        position: absolute;
+        top: calc(50% - 16px);
+        transform: translateY(-50%);
+        opacity: 0.1;
+        left: calc(50% - 26px);
+        z-index: 1;
+      }
+    }
   }
 }

@@ -34,7 +34,7 @@
           *ngIf="isFieldInvalid('confirmPassword')">Please confirm password</small>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
-      <span class="error-msg" *ngIf="errorMsg">{{errorMsg}}</span>
     </fieldset>
-  </form>
+  </form>  
 </div>
+<b-error-panel [errorResponse]="errorResponse$"></b-error-panel>

@@ -6,6 +6,7 @@ import { RowsResponse, HandledErrorResponse, DataResponse } from '../core/respon
 import { apiURL } from '../config';
 import { UserModel } from '../core/user.model';
 import { GlobalErrorHandler } from '../core/global-error-handler';
+import { UserCreateModel } from './users.model';
 
 
 /**
@@ -37,16 +38,15 @@ export class UsersService {
    * @param {string} username
    * @param {string} email
    * @param {string} password
-   * @returns {(Promise<DataResponse<UserModel> | HandledErrorResponse>)}
+   * @returns {(Observable<DataResponse<UserModel> | HandledErrorResponse>)}
    * @memberof UsersService
    */
-  async addUser(username: string, email: string, password: string): Promise<DataResponse<UserModel> | HandledErrorResponse> {
-    return this.http.post<DataResponse<UserModel>>(`${apiURL}/user`, { username, email, password }, { withCredentials: true })
+  addUser(user: UserCreateModel): Observable<DataResponse<UserModel> | HandledErrorResponse> {
+    return this.http.post<DataResponse<UserModel>>(`${apiURL}/user`, user, { withCredentials: true })
       .map((res: DataResponse<UserModel>) => res)
       .catch((err: any, caught: Observable<DataResponse<UserModel>>) => {
         return this.globalErrorHandler.handleError(err);
-      })
-      .toPromise();
+      });
   }
 
   /**

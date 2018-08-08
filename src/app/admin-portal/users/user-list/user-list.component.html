@@ -4,7 +4,7 @@
   </li>
 </ul>
 <b-data-grid [columns]="columns" [rows]="rows" [emptyText]="emptyText"
-  [errorMessage]="errorMessage" [actions]="actions">
+  [errorMessage]="errorMessage" [actions]="actions" [bMask]="busy$">
   <div class="small">
     <div *ngFor="let row of rows" class="card card-accent-primary">
       <div class="card-header">
@@ -22,3 +22,4 @@
     <a class="nav-link active" href="javascript:void(0)" (click)="loadUsers()"><i class="fa fa-refresh"></i> Refresh</a>
   </li>
 </ul>
+<b-error-panel [errorResponse]="errorResponse$"></b-error-panel>

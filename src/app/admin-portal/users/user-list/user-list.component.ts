@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 import { Column } from '../../core/data-grid/data-grid.model';
 import { UsersService } from '../users.service';
-import { DataResponse } from '../../core/response.model';
 import { UserModel } from '../../core/user.model';
 import { DataGridClass } from '../../core/data-grid/data-grid.class';
 import { UsersFeatureState, UsersState } from '../store/users.reducer';
@@ -34,6 +34,9 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
     }
   }];
 
+  busy$: Observable<boolean> = this.store.select('usersFeature').map((state: UsersState) => state.users.usersBusy);
+  errorResponse$ = this.store.select('usersFeature').map((state: UsersState) => state.users.usersError);
+
   constructor(private usersService: UsersService, private store: Store<UsersFeatureState>) {
     super();
     this.store.select('usersFeature').subscribe((state: UsersState) => {
@@ -50,6 +53,6 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
   }
 
   deleteUser(id) {
-    this.store.dispatch(new RequestDeleteUser(id));
+    // this.store.dispatch(new RequestDeleteUser(id));
   }
 }

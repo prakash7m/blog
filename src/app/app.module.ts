@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { MarkdownModule } from 'ngx-markdown';
 import { HttpModule } from '@angular/http';
@@ -15,6 +16,7 @@ import { SharedModule } from './shared/shared.module';
     AppComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     SharedModule,
     BrowserModule,
     AppRoutingModule,

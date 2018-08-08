@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import 'rxjs/add/operator/mergeMap';
-import { REQUEST_LOAD_USERS, LoadUsers, UsersError, UserAction, REQUEST_DELETE_USER, UserDeleteSuccess } from './users.actions';
+import { REQUEST_LOAD_USERS, LoadUsers, UsersError, UserAction,
+  REQUEST_DELETE_USER, UserDeleteSuccess, REQUEST_CREATE_USER, UserCreateSuccess } from './users.actions';
 import { UsersService } from '../users.service';
 import { RowsResponse, DataResponse } from '../../core/response.model';
 import { UserModel } from '../../core/user.model';
 import { UsersFeatureState } from './users.reducer';
-
+import { UserCreateModel } from '../users.model';
+import { Observable, ObservableInput } from '../../../../../node_modules/rxjs';
 
 
 /**
@@ -18,7 +21,12 @@ import { UsersFeatureState } from './users.reducer';
  */
 @Injectable()
 export class UsersEffect {
-  constructor(private actions$: Actions, private usersService: UsersService, private store: Store<UsersFeatureState>) { }
+  constructor(
+    private actions$: Actions,
+    private usersService: UsersService,
+    private store: Store<UsersFeatureState>,
+    private router: Router
+  ) { }
   @Effect()
   $requestLoadUsersEffect = this.actions$
     .ofType(REQUEST_LOAD_USERS)
@@ -28,9 +36,11 @@ export class UsersEffect {
           .map((response: RowsResponse<UserModel>) => {
             if (response.rows) {
               return new LoadUsers(response.rows);
-            } else {
-              return new UsersError(response.message);
             }
+          })
+          .catch((err: any, caught: Observable<UsersError | LoadUsers>) => {
+            this.store.dispatch(new UsersError(err.message));
+            return Observable.of();
           });
     });
 
@@ -43,9 +53,29 @@ export class UsersEffect {
         .map((response: DataResponse<UserModel>) => {
           if (response.data) {
             return new UserDeleteSuccess(response.data);
-          } else {
-            return new UsersError(response.message);
           }
+        })
+        .catch((err: any, caught: Observable<UsersError | UserDeleteSuccess>) => {
+          this.store.dispatch(new UsersError(err));
+          return Observable.of();
+        });
+    });
+
+  @Effect()
+  $requestCreateUserEffect = this.actions$
+    .ofType(REQUEST_CREATE_USER)
+    .map((action: UserAction) => action.payload)
+    .mergeMap((user: UserCreateModel) => {
+      return this.usersService.addUser(user)
+        .map((response: DataResponse<UserModel>) => {
+          if (response.data) {
+            this.router.navigate(['/admin/users']);
+            return new UserCreateSuccess(response.data);
+          }
+        })
+        .catch((err: any, caught: Observable<UsersError | UserCreateSuccess>) => {
+          this.store.dispatch(new UsersError(err));
+          return Observable.of();
         });
     });
 }

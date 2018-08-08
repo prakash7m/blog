@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { CustomValidator } from './custom.validator';
 import { UsersService } from '../users.service';
 import { DataResponse } from '../../core/response.model';
 import { UserModel } from '../../core/user.model';
+import { RequestCreateUser } from '../store/users.actions';
+import { Observable } from '../../../../../node_modules/rxjs';
+import { UsersState } from '../store/users.reducer';
+
 
 @Component({
   selector: 'b-user-form',
@@ -14,8 +19,8 @@ import { UserModel } from '../../core/user.model';
 })
 export class UserFormComponent implements OnInit {
   formGroup: FormGroup;
-  errorMsg: string;
-  constructor(private fb: FormBuilder, private userService: UsersService, private router: Router) {
+  errorResponse$ = this.store.select('usersFeature').map((state: UsersState) => state.users.usersError);
+  constructor(private fb: FormBuilder, private userService: UsersService, private router: Router, private store: Store<any>) {
     const passwordControl: FormControl = new FormControl(null, [Validators.required, Validators.minLength(5)]);
     this.formGroup = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
@@ -28,25 +33,17 @@ export class UserFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  async addUser() {
+  addUser() {
     if (!this.formGroup.valid) {
       this.validateAllFormFields(this.formGroup);
       return false;
     }
-    try {
-      const res: DataResponse<UserModel> = <DataResponse<UserModel>>await this.userService.addUser(
-        this.formGroup.get('username').value,
-        this.formGroup.get('email').value,
-        this.formGroup.get('password').value
-      );
-      console.log(res);
-      if (res.data) {
-        this.router.navigateByUrl('/admin/users');
-      }
-    } catch (err) {
-      console.log(err);
-      this.errorMsg = err.message;
-    }
+    const user = {
+      username: this.formGroup.get('username').value,
+      email: this.formGroup.get('email').value,
+      password: this.formGroup.get('password').value
+    };
+    this.store.dispatch(new RequestCreateUser(user));
   }
   validateAllFormFields(formGroup: FormGroup) {         // {1}
     Object.keys(formGroup.controls).forEach(field => {  // {2}
