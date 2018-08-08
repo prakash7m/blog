@@ -3,9 +3,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import storage from 'local-storage-fallback';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { HandledErrorResponse } from './response.model';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 
 /**
  * The global error handler extending ErrorHandler.
@@ -85,6 +85,9 @@ export class GlobalErrorHandler extends ErrorHandler {
       if (recentAuthState) {
         storage.setItem('recent-auth-state', '');
       }
+
+      const router = this.injector.get(Router);
+      console.log(router)
       if (window.location.pathname !== '/admin/login') {
         window.location.href = '/admin/login?r=' + window.location.pathname;
       }

@@ -34,6 +34,10 @@ export class AuthenticationService {
    */
   constructor(private http: HttpClient, private router: Router, private globalErrorHandler: GlobalErrorHandler) { }
 
+  hasLoginCookie(): boolean {
+    return storage.getItem('recent-auth-state') ? true : false;
+  }
+  
   /**
    * Makes api call to server to check the logged in state of the user.
    * If logged in, saves in a local variable for future reference.
@@ -42,7 +46,6 @@ export class AuthenticationService {
    * @memberof AuthenticationService
    */
   async isAuthenticated(): Promise<boolean | HandledErrorResponse> {
-    const a = storage.getItem('recent-auth-state');
     if (storage.getItem('recent-auth-state')) {
       return Observable.of(true).toPromise();
     }

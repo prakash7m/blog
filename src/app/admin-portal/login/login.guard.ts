@@ -6,17 +6,24 @@ import { AuthenticationService } from '../core/authentication.service';
 export class LoginGuard implements CanActivate {
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
-  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    try {
-      const authenticated = await this.authenticationService.isAuthenticated();
-      if (authenticated) {
-        this.router.navigateByUrl('/admin');
-        return false;
-      } else {
-        return true;
-      }
-    } catch (err) {
-      return true;
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const hasLoginCookie = this.authenticationService.hasLoginCookie();
+    if (hasLoginCookie) {
+      this.router.navigateByUrl('/admin');
+      return false;
+    } else {
+      return true;    
     }
-  }
+  //   try {
+  //     const authenticated = await this.authenticationService.isAuthenticated();
+  //     if (authenticated) {
+  //       this.router.navigateByUrl('/admin');
+  //       return false;
+  //     } else {
+  //       return true;
+  //     }
+  //   } catch (err) {
+  //     return true;
+  //   }
+  // }
 }
