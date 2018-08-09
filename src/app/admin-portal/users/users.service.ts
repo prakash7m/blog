@@ -63,4 +63,20 @@ export class UsersService {
         return this.globalErrorHandler.handleError(err);
       });
   }
+
+  loadUser(id: string): Observable<DataResponse<UserModel> | HandledErrorResponse> {
+    return this.http.get<DataResponse<UserModel>>(`${apiURL}/user/${id}`, { withCredentials: true })
+      .map((res: DataResponse<UserModel>) => res)
+      .catch((err: any, caught: Observable<DataResponse<UserModel>>) => {
+        return this.globalErrorHandler.handleError(err);
+      });
+  }
+
+  editUser(user: UserModel): Observable<DataResponse<UserModel> | HandledErrorResponse> {
+    return this.http.put<DataResponse<UserModel>>(`${apiURL}/user/${user._id}`, user, { withCredentials: true })
+      .map((res: DataResponse<UserModel>) => res)
+      .catch((err: any, caught: Observable<DataResponse<UserModel>>) => {
+        return this.globalErrorHandler.handleError(err);
+      });
+  }
 }

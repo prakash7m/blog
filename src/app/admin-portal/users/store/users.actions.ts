@@ -10,6 +10,11 @@ export const REQUEST_DELETE_USER = '[users] REQUEST DELETE';
 export const USER_DELETE_SUCCESS = '[users] DELETE SUCCESS';
 export const REQUEST_CREATE_USER = '[users] REQUEST CREATE';
 export const USER_CREATE_SUCCESS = '[users] CREATE SUCCESS';
+export const REQUEST_LOAD_USER = '[users] REQUEST LOAD USER';
+export const USER_LOAD_SUCCESS = '[users] LOAD USER SUCCESS';
+export const RESET_EDITING_USER = '[users] RESET EDITING USER';
+export const REQUEST_EDIT_USER = '[users] REQUEST EDIT USER';
+export const USER_EDIT_SUCCESS = '[users] EDIT USER SUCCESS';
 
 export interface UserAction {
   type: string;
@@ -53,6 +58,31 @@ export class RequestCreateUser implements UserAction {
 
 export class UserCreateSuccess implements UserAction {
   readonly type: string =  USER_CREATE_SUCCESS;
+  constructor(public payload: UserModel) { }
+}
+
+export class RequestLoadUser implements UserAction {
+  readonly type: string =  REQUEST_LOAD_USER;
+  constructor(public payload: string) { }
+}
+
+export class UserLoadSuccess implements UserAction {
+  readonly type: string =  USER_LOAD_SUCCESS;
+  constructor(public payload: UserModel) { }
+}
+
+export class ResetEditingUser implements UserAction {
+  readonly type: string =  RESET_EDITING_USER;
+  constructor() { }
+}
+
+export class RequestEditUser implements UserAction {
+  readonly type: string =  REQUEST_EDIT_USER;
+  constructor(public payload: UserModel) { }
+}
+
+export class UserEditSuccess implements UserAction {
+  readonly type: string =  USER_EDIT_SUCCESS;
   constructor(public payload: UserModel) { }
 }
 

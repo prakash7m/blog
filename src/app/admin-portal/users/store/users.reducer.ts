@@ -2,7 +2,9 @@ import { Action } from '@ngrx/store';
 
 import { UserModel } from '../../core/user.model';
 import { LOAD_USERS, UserAction, USERS_BUSY, USERS_ERROR, REQUEST_LOAD_USERS,
-  USER_DELETE_SUCCESS, REQUEST_DELETE_USER, REQUEST_CREATE_USER, USER_CREATE_SUCCESS } from './users.actions';
+  USER_DELETE_SUCCESS, REQUEST_DELETE_USER, REQUEST_CREATE_USER,
+  USER_CREATE_SUCCESS, USER_LOAD_SUCCESS, REQUEST_LOAD_USER, RESET_EDITING_USER,
+  USER_EDIT_SUCCESS, REQUEST_EDIT_USER } from './users.actions';
 import { HandledErrorResponse } from '../../core/response.model';
 
 export interface UsersReducerState {
@@ -15,12 +17,14 @@ export interface UsersState {
 
 export interface UsersFeatureState {
   usersList: UserModel[];
+  editingUser: UserModel;
   usersBusy: boolean;
   usersError: HandledErrorResponse;
 }
 
 export const initialUsersFeatureState: UsersFeatureState = {
   usersList: [],
+  editingUser: null,
   usersBusy: false,
   usersError: null
 };
@@ -30,6 +34,8 @@ export const usersReducer = (state: UsersFeatureState = initialUsersFeatureState
     case REQUEST_LOAD_USERS:
     case REQUEST_DELETE_USER:
     case REQUEST_CREATE_USER:
+    case REQUEST_LOAD_USER:
+    case REQUEST_EDIT_USER:
       return {
         ...state,
         usersBusy: true,
@@ -63,6 +69,24 @@ export const usersReducer = (state: UsersFeatureState = initialUsersFeatureState
         ...state,
         usersList: [...state.usersList, action.payload],
         usersBusy: false
+      };
+    case USER_LOAD_SUCCESS:
+      return {
+        ...state,
+        editingUser: action.payload,
+        usersBusy: false
+      };
+    case USER_EDIT_SUCCESS:
+      return {
+        ...state,
+        usersList: [...state.usersList.map(item => item._id === action.payload._id ? action.payload : item)],
+        editingUser: null,
+        usersBusy: false
+      };
+    case RESET_EDITING_USER:
+      return {
+        ...state,
+        editingUser: null
       };
     default:
       return state;

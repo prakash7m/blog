@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import 'rxjs/add/operator/filter';
 
 import { CustomValidator } from './custom.validator';
 import { UsersService } from '../users.service';
-import { DataResponse } from '../../core/response.model';
-import { UserModel } from '../../core/user.model';
-import { RequestCreateUser } from '../store/users.actions';
-import { Observable } from '../../../../../node_modules/rxjs';
+import { RequestCreateUser, RequestLoadUsers, RequestLoadUser, ResetEditingUser, RequestEditUser } from '../store/users.actions';
 import { UsersState } from '../store/users.reducer';
+import { UserModel } from '../../core/user.model';
+import { FormBase } from '../../core/form.base';
 
 
 @Component({
@@ -17,10 +17,21 @@ import { UsersState } from '../store/users.reducer';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent extends FormBase<UserModel> implements OnInit {
   formGroup: FormGroup;
   errorResponse$ = this.store.select('usersFeature').map((state: UsersState) => state.users.usersError);
-  constructor(private fb: FormBuilder, private userService: UsersService, private router: Router, private store: Store<any>) {
+  busy$ = this.store.select('usersFeature').map((state: UsersState) => state.users.usersBusy);
+  editingItem$ = this.store.select('usersFeature').map((state: UsersState) => state.users.editingUser);
+  constructor(route: ActivatedRoute, private fb: FormBuilder, private store: Store<any>) {
+    super(route);
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
+  }
+
+  initCreateForm() {
+    this.store.dispatch(new ResetEditingUser());
     const passwordControl: FormControl = new FormControl(null, [Validators.required, Validators.minLength(5)]);
     this.formGroup = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
@@ -30,14 +41,18 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  initEditForm() {
+    this.formGroup = this.fb.group({
+      email: [null, [Validators.required, Validators.email]],
+      username: [null, [Validators.required, Validators.minLength(5)]]
+    });
   }
 
-  addUser() {
-    if (!this.formGroup.valid) {
-      this.validateAllFormFields(this.formGroup);
-      return false;
-    }
+  loadForm(id) {
+    this.store.dispatch(new RequestLoadUser(id));
+  }
+
+  submitCreateForm() {
     const user = {
       username: this.formGroup.get('username').value,
       email: this.formGroup.get('email').value,
@@ -45,18 +60,13 @@ export class UserFormComponent implements OnInit {
     };
     this.store.dispatch(new RequestCreateUser(user));
   }
-  validateAllFormFields(formGroup: FormGroup) {         // {1}
-    Object.keys(formGroup.controls).forEach(field => {  // {2}
-      const control = formGroup.get(field);             // {3}
-      if (control instanceof FormControl) {             // {4}
-        control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {        // {5}
-        this.validateAllFormFields(control);            // {6}
-      }
-    });
-  }
 
-  isFieldInvalid(field: string) {
-    return !this.formGroup.get(field).valid && this.formGroup.get(field).touched;
+  submitEditForm() {
+    const user = {
+      _id: this.editMode,
+      username: this.formGroup.get('username').value,
+      email: this.formGroup.get('email').value
+    };
+    this.store.dispatch(new RequestEditUser(user));
   }
 }

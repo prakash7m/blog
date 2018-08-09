@@ -87,7 +87,7 @@ export class GlobalErrorHandler extends ErrorHandler {
       }
 
       const router = this.injector.get(Router);
-      console.log(router)
+      console.log(router);
       if (window.location.pathname !== '/admin/login') {
         window.location.href = '/admin/login?r=' + window.location.pathname;
       }

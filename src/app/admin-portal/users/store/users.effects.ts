@@ -4,7 +4,8 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/mergeMap';
 import { REQUEST_LOAD_USERS, LoadUsers, UsersError, UserAction,
-  REQUEST_DELETE_USER, UserDeleteSuccess, REQUEST_CREATE_USER, UserCreateSuccess } from './users.actions';
+  REQUEST_DELETE_USER, UserDeleteSuccess, REQUEST_CREATE_USER,
+  UserCreateSuccess, REQUEST_LOAD_USER, UserLoadSuccess, ResetEditingUser, REQUEST_EDIT_USER, UserEditSuccess } from './users.actions';
 import { UsersService } from '../users.service';
 import { RowsResponse, DataResponse } from '../../core/response.model';
 import { UserModel } from '../../core/user.model';
@@ -74,6 +75,41 @@ export class UsersEffect {
           }
         })
         .catch((err: any, caught: Observable<UsersError | UserCreateSuccess>) => {
+          this.store.dispatch(new UsersError(err));
+          return Observable.of();
+        });
+    });
+  @Effect()
+  $requestLoadUserEffect = this.actions$
+    .ofType(REQUEST_LOAD_USER)
+    .map((action: UserAction) => action.payload)
+    .mergeMap((id: string) => {
+      this.store.dispatch(new ResetEditingUser());
+      return this.usersService.loadUser(id)
+        .map((response: DataResponse<UserModel>) => {
+          if (response.data) {
+            return new UserLoadSuccess(response.data);
+          }
+        })
+        .catch((err: any, caught: Observable<UsersError | UserLoadSuccess>) => {
+          this.store.dispatch(new UsersError(err));
+          return Observable.of();
+        });
+    });
+
+  @Effect()
+  $requestEditUserEffect = this.actions$
+    .ofType(REQUEST_EDIT_USER)
+    .map((action: UserAction) => action.payload)
+    .mergeMap((user: UserModel) => {
+      return this.usersService.editUser(user)
+        .map((response: DataResponse<UserModel>) => {
+          if (response.data) {
+            this.router.navigate(['/admin/users']);
+            return new UserEditSuccess(response.data);
+          }
+        })
+        .catch((err: any, caught: Observable<UsersError | UserLoadSuccess>) => {
           this.store.dispatch(new UsersError(err));
           return Observable.of();
         });
