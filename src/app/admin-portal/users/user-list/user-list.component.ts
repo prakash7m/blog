@@ -45,7 +45,7 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
   }
 
   ngOnInit() {
-    this.loadUsers();
+    !this.rows.length && this.loadUsers();
   }
 
   loadUsers() {

@@ -14,16 +14,5 @@ export class LoginGuard implements CanActivate {
     } else {
       return true;    
     }
-  //   try {
-  //     const authenticated = await this.authenticationService.isAuthenticated();
-  //     if (authenticated) {
-  //       this.router.navigateByUrl('/admin');
-  //       return false;
-  //     } else {
-  //       return true;
-  //     }
-  //   } catch (err) {
-  //     return true;
-  //   }
-  // }
+  }
 }

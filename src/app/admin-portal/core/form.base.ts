@@ -1,5 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { take } from 'rxjs/operators';
 import { FormGroup, FormControl } from '@angular/forms';
 import { OnInit } from '@angular/core';
 
@@ -33,6 +34,7 @@ export class FormBase<T> implements OnInit {
         this.loadForm(params.id, params);
         this.editingItem$
           .filter(item => !!item)
+          .pipe(take(1))
           .subscribe((item: T) => {
             this.formGroup.patchValue(item);
           });
