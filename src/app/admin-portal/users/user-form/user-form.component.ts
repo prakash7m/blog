@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NavigationEnd, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import 'rxjs/add/operator/filter';
 
 import { CustomValidator } from './custom.validator';
-import { UsersService } from '../users.service';
-import { RequestCreateUser, RequestLoadUsers, RequestLoadUser, ResetEditingUser, RequestEditUser } from '../store/users.actions';
+import { RequestCreateUser, RequestLoadUser, ResetEditingUser, RequestEditUser } from '../store/users.actions';
 import { UsersState } from '../store/users.reducer';
 import { UserModel } from '../../core/user.model';
 import { FormBase } from '../../core/form.base';
