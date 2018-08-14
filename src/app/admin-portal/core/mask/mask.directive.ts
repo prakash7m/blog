@@ -20,10 +20,10 @@ export class MaskDirective implements OnInit {
   }
 
   mask (busy) {
+    console.log(busy);
+    this.removeMask();
     if (busy) {
       this.addMask();
-    } else {
-      this.removeMask();
     }
   }
 

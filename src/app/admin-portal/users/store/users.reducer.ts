@@ -1,11 +1,14 @@
 import { Action } from '@ngrx/store';
 
 import { UserModel } from '../../core/user.model';
-import { LOAD_USERS, UserAction, USERS_BUSY, USERS_ERROR, REQUEST_LOAD_USERS,
+import {
+  LOAD_USERS, UserAction, USERS_BUSY, USERS_ERROR, REQUEST_LOAD_USERS,
   USER_DELETE_SUCCESS, REQUEST_DELETE_USER, REQUEST_CREATE_USER,
   USER_CREATE_SUCCESS, USER_LOAD_SUCCESS, REQUEST_LOAD_USER, RESET_EDITING_USER,
-  USER_EDIT_SUCCESS, REQUEST_EDIT_USER } from './users.actions';
+  USER_EDIT_SUCCESS, REQUEST_EDIT_USER
+} from './users.actions';
 import { HandledErrorResponse } from '../../core/response.model';
+import { StateHelper } from '../../core/state.helper';
 
 export interface UsersReducerState {
   users(state: UsersFeatureState, action: UserAction): UsersFeatureState;
@@ -17,35 +20,31 @@ export interface UsersState {
 
 export interface UsersFeatureState {
   usersList: UserModel[];
+  meta: MetaState<UserModel>;
   editingUser: UserModel;
   usersBusy: boolean;
   usersError: HandledErrorResponse;
 }
-
+export interface MetaState<T> {
+  progress?: { [key: string]: boolean };
+  error?: { [key: string]: HandledErrorResponse };
+  editingModel?: T;
+}
 export const initialUsersFeatureState: UsersFeatureState = {
   usersList: [],
+  meta: {},
   editingUser: null,
   usersBusy: false,
   usersError: null
 };
 
-export const usersReducer = (state: UsersFeatureState = initialUsersFeatureState, action: UserAction): UsersFeatureState => {
+export const usersReducer = (pstate: UsersFeatureState = initialUsersFeatureState, action: UserAction): UsersFeatureState => {
+  const state = StateHelper.interceptMeta(pstate, action);
   switch (action.type) {
-    case REQUEST_LOAD_USERS:
-    case REQUEST_DELETE_USER:
-    case REQUEST_CREATE_USER:
-    case REQUEST_LOAD_USER:
-    case REQUEST_EDIT_USER:
-      return {
-        ...state,
-        usersBusy: true,
-        usersError: null
-      };
     case LOAD_USERS:
       return {
         ...state,
-        usersList: action.payload,
-        usersBusy: false
+        usersList: action.payload
       };
     case USERS_BUSY:
       return {
@@ -54,39 +53,30 @@ export const usersReducer = (state: UsersFeatureState = initialUsersFeatureState
       };
     case USERS_ERROR:
       return {
-        ...state,
-        usersError: action.payload,
-        usersBusy: false
+        ...state
       };
     case USER_DELETE_SUCCESS:
       return {
         ...state,
-        usersList: [...state.usersList.filter(item => item._id !== action.payload._id)],
-        usersBusy: false
+        usersList: [...state.usersList.filter(item => item._id !== action.payload._id)]
       };
     case USER_CREATE_SUCCESS:
       return {
         ...state,
-        usersList: [...state.usersList, action.payload],
-        usersBusy: false
+        usersList: [...state.usersList, action.payload]
       };
     case USER_LOAD_SUCCESS:
       return {
-        ...state,
-        editingUser: action.payload,
-        usersBusy: false
+        ...state
       };
     case USER_EDIT_SUCCESS:
       return {
         ...state,
-        usersList: [...state.usersList.map(item => item._id === action.payload._id ? action.payload : item)],
-        editingUser: null,
-        usersBusy: false
+        usersList: [...state.usersList.map(item => item._id === action.payload._id ? action.payload : item)]
       };
     case RESET_EDITING_USER:
       return {
-        ...state,
-        editingUser: null
+        ...state
       };
     default:
       return state;

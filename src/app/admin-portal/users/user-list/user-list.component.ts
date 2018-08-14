@@ -7,7 +7,8 @@ import { UsersService } from '../users.service';
 import { UserModel } from '../../core/user.model';
 import { DataGridClass } from '../../core/data-grid/data-grid.class';
 import { UsersFeatureState, UsersState } from '../store/users.reducer';
-import { RequestLoadUsers, RequestDeleteUser } from '../store/users.actions';
+import { RequestLoadUsers, RequestDeleteUser, REQUEST_LOAD_USERS } from '../store/users.actions';
+import { StateHelper } from '../../core/state.helper';
 
 @Component({
   selector: 'b-user-list',
@@ -33,8 +34,10 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
       this.deleteUser(row._id);
     }
   }];
-
-  busy$: Observable<boolean> = this.store.select('usersFeature').map((state: UsersState) => state.users.usersBusy);
+  featureState$ = StateHelper.stateForFeature(this.store, 'usersFeature', 'users');
+  // busy$: Observable<boolean> = this.store.select('usersFeature')
+  //  .map((state: UsersState) => state.users.meta.progress[REQUEST_LOAD_USERS]);
+  busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, REQUEST_LOAD_USERS);
   errorResponse$ = this.store.select('usersFeature').map((state: UsersState) => state.users.usersError);
 
   constructor(private usersService: UsersService, private store: Store<UsersFeatureState>) {
@@ -45,7 +48,9 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
   }
 
   ngOnInit() {
-    !this.rows.length && this.loadUsers();
+    if (!this.rows.length) {
+      this.loadUsers();
+    }
   }
 
   loadUsers() {
