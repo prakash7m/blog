@@ -5,8 +5,10 @@ import { Store } from '@ngrx/store';
 import 'rxjs/add/operator/filter';
 
 import { CustomValidator } from './custom.validator';
-import { RequestCreateUser, RequestLoadUser, ResetEditingUser,
-  RequestEditUser, REQUEST_CREATE_USER, REQUEST_EDIT_USER, REQUEST_LOAD_USER } from '../store/users.actions';
+import {
+  RequestCreateUser, RequestLoadUser, ResetEditingUser,
+  RequestEditUser, REQUEST_CREATE_USER, REQUEST_EDIT_USER, REQUEST_LOAD_USER
+} from '../store/users.actions';
 import { Observable } from 'rxjs/Observable';
 
 import { UsersState } from '../store/users.reducer';
@@ -23,7 +25,8 @@ import { StateHelper } from '../../core/state.helper';
 export class UserFormComponent extends FormBase<UserModel> implements OnInit {
   formGroup: FormGroup;
   featureState$ = StateHelper.stateForFeature(this.store, 'usersFeature', 'users');
-  errorResponse$ = this.store.select('usersFeature').map((state: UsersState) => state.users.usersError);
+  // errorResponse$ = this.store.select('usersFeature').map((state: UsersState) => state.users.usersError);
+  errorResponse$ = StateHelper.errorFor(this.featureState$, [REQUEST_LOAD_USER, REQUEST_CREATE_USER, REQUEST_EDIT_USER]);
   busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, [REQUEST_LOAD_USER, REQUEST_CREATE_USER, REQUEST_EDIT_USER]);
   editingItem$ = StateHelper.editingModelFor(this.featureState$);
   constructor(route: ActivatedRoute, private fb: FormBuilder, private store: Store<any>) {

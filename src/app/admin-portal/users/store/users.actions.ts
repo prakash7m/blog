@@ -41,8 +41,8 @@ export class UsersBusy implements UserAction {
 
 export class UsersError implements UserAction {
   readonly type: string = USERS_ERROR;
-  readonly meta: MetaState<UserModel> = { progress: { [REQUEST_LOAD_USERS]: false } };
-  constructor(public payload: HandledErrorResponse) { }
+  readonly meta: MetaState<UserModel> = { progress: { [this.initiator]: false }, error: { [this.initiator]: this.payload } };
+  constructor(public payload: HandledErrorResponse, public initiator: string) { }
 }
 
 export class RequestDeleteUser implements UserAction {

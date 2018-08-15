@@ -40,7 +40,7 @@ export class UsersEffect {
             }
           })
           .catch((err: any, caught: Observable<UsersError | LoadUsers>) => {
-            this.store.dispatch(new UsersError(err.message));
+            this.store.dispatch(new UsersError(err, REQUEST_LOAD_USERS));
             return Observable.of();
           });
     });
@@ -57,7 +57,7 @@ export class UsersEffect {
           }
         })
         .catch((err: any, caught: Observable<UsersError | UserDeleteSuccess>) => {
-          this.store.dispatch(new UsersError(err));
+          this.store.dispatch(new UsersError(err, REQUEST_DELETE_USER));
           return Observable.of();
         });
     });
@@ -75,7 +75,7 @@ export class UsersEffect {
           }
         })
         .catch((err: any, caught: Observable<UsersError | UserCreateSuccess>) => {
-          this.store.dispatch(new UsersError(err));
+          this.store.dispatch(new UsersError(err, REQUEST_CREATE_USER));
           return Observable.of();
         });
     });
@@ -92,7 +92,7 @@ export class UsersEffect {
           }
         })
         .catch((err: any, caught: Observable<UsersError | UserLoadSuccess>) => {
-          this.store.dispatch(new UsersError(err));
+          this.store.dispatch(new UsersError(err, REQUEST_LOAD_USER));
           return Observable.of();
         });
     });
@@ -110,7 +110,7 @@ export class UsersEffect {
           }
         })
         .catch((err: any, caught: Observable<UsersError | UserLoadSuccess>) => {
-          this.store.dispatch(new UsersError(err));
+          this.store.dispatch(new UsersError(err, REQUEST_EDIT_USER));
           return Observable.of();
         });
     });

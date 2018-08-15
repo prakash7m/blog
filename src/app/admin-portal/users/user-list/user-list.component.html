@@ -1,8 +1,6 @@
-<ul class="nav nav-pills">
-  <li class="nav-item">
-    <a class="nav-link active" routerLink="/admin/users/create"><i class="fa fa-plus"></i> Add</a>
-  </li>
-</ul>
+<b-toolbar>
+  <a class="btn btn-outline-primary active" routerLink="/admin/users/create"><i class="fa fa-plus"></i> Add</a>
+</b-toolbar>
 <b-data-grid [columns]="columns" [rows]="rows" [emptyText]="emptyText"
   [errorMessage]="errorMessage" [actions]="actions" [bMask]="busy$">
   <div class="small">
@@ -17,9 +15,7 @@
     </div>
   </div>
 </b-data-grid>
-<ul class="nav footer nav-pills">
-  <li class="nav-item">
-    <a class="nav-link active" href="javascript:void(0)" (click)="loadUsers()"><i class="fa fa-refresh"></i> Refresh</a>
-  </li>
-</ul>
+<b-toolbar footer="true">
+  <a class="btn btn-outline-primary active" href="javascript:void(0)" (click)="loadUsers()"><i class="fa fa-refresh"></i> Refresh</a>
+</b-toolbar>
 <b-error-panel [errorResponse]="errorResponse$"></b-error-panel>

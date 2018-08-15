@@ -70,7 +70,7 @@ export class StateHelper {
   public static interceptMeta(pstate: any, action: any) {
     let state = { ...pstate };
     if (action.meta && action.meta.progress) {
-      state = { ...state, meta: { ...state.meta, progress: Object.assign({}, state.meta.progress, action.meta.progress) } };
+      state = { ...state, meta: { ...state.meta, progress: Object.assign({}, state.meta.progress, action.meta.progress), error: {} } };
     }
     if (action.meta && action.meta.error) {
       state = { ...state, meta: { ...state.meta, error: action.meta.error } };
@@ -141,12 +141,12 @@ export class StateHelper {
         observables.push(this.errorFor(stateObservable, k));
       });
       return combineLatest(...observables, (...value) => {
-        return value.some(v => v !== null);
+        return value.filter(v => v !== null)[0];
       });
     }
     return stateObservable.map(state => {
       if (state.meta && state.meta.error) {
-        return state.meta.error[key];
+        return state.meta.error[key] || null;
       }
       return null;
     });
