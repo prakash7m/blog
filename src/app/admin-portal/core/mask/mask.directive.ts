@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { text } from '../../../../../node_modules/@angular/core/src/render3/instructions';
+import { text } from '@angular/core/src/render3/instructions';
 
 
 @Directive({
@@ -8,8 +8,8 @@ import { text } from '../../../../../node_modules/@angular/core/src/render3/inst
 })
 export class MaskDirective implements OnInit {
   @Input() bMask: Observable<boolean>;
-  @Input() bMessage = 'Operation in progress';
-  busy: boolean;
+  @Input() bMessages: {[key: string]: string} = {};
+  defaultMessage: string = "Operation in progress";
   maskEl: any;
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
@@ -22,7 +22,7 @@ export class MaskDirective implements OnInit {
   mask (busy) {
     this.removeMask();
     if (busy) {
-      this.addMask();
+      this.addMask(busy);
     }
   }
 
@@ -32,11 +32,11 @@ export class MaskDirective implements OnInit {
       this.maskEl = null;
     }
   }
-  addMask () {
+  addMask (busy: string) {
     const maskEl = this.maskEl = this.renderer.createElement('div');
     const messageEl = this.renderer.createElement('div');
     this.renderer.addClass(messageEl, 'mask-msg');
-    const textEl = this.renderer.createText(this.bMessage);
+    const textEl = this.renderer.createText(this.bMessages[busy] || this.defaultMessage);
     const spinner = this.renderer.createElement('i');
     this.renderer.addClass(spinner, 'fa');
     this.renderer.addClass(spinner, 'fa-spin');

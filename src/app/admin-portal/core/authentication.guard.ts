@@ -34,9 +34,7 @@ export class AuthenticationGuard implements CanActivate {
    */
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     try {
-      const authenticated = <boolean>await this.authenticationService.isAuthenticated();
-      console.log(authenticated);
-      return authenticated;
+      return <boolean>await this.authenticationService.isAuthenticated();
     } catch (err) {
       console.log('error', err);
       return false;

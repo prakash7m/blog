@@ -1,7 +1,7 @@
 import { UserModel } from '../../core/user.model';
 import { UserCreateModel } from '../users.model';
 import { HandledErrorResponse } from '../../core/response.model';
-import { MetaState } from './users.reducer';
+import { MetaState } from '../../core/state.helper';
 
 export const LOAD_USERS = '[users] LOAD';
 export const REQUEST_LOAD_USERS = '[users] REQUEST LOAD';

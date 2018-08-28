@@ -7,8 +7,9 @@ import { UsersService } from '../users.service';
 import { UserModel } from '../../core/user.model';
 import { DataGridClass } from '../../core/data-grid/data-grid.class';
 import { UsersFeatureState, UsersState } from '../store/users.reducer';
-import { RequestLoadUsers, RequestDeleteUser, REQUEST_LOAD_USERS } from '../store/users.actions';
+import { RequestLoadUsers, RequestDeleteUser, REQUEST_LOAD_USERS, REQUEST_DELETE_USER } from '../store/users.actions';
 import { StateHelper } from '../../core/state.helper';
+import { HandledErrorResponse } from '../../core/response.model';
 
 @Component({
   selector: 'b-user-list',
@@ -35,11 +36,12 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
     }
   }];
   featureState$ = StateHelper.stateForFeature(this.store, 'usersFeature', 'users');
-  // busy$: Observable<boolean> = this.store.select('usersFeature')
-  //  .map((state: UsersState) => state.users.meta.progress[REQUEST_LOAD_USERS]);
-  busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, REQUEST_LOAD_USERS);
-  errorResponse$ = this.store.select('usersFeature').map((state: UsersState) => state.users.usersError);
-
+  busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, [REQUEST_LOAD_USERS, REQUEST_DELETE_USER]);
+  errorResponse$: Observable<HandledErrorResponse> = StateHelper.errorFor(this.featureState$, [REQUEST_LOAD_USERS, REQUEST_DELETE_USER]);
+  busyMessages: {[key: string]: string} = {
+    [REQUEST_LOAD_USERS]: "Loading users",
+    [REQUEST_DELETE_USER]: "Deleting user"
+  };
   constructor(private usersService: UsersService, private store: Store<UsersFeatureState>) {
     super();
     this.store.select('usersFeature').subscribe((state: UsersState) => {
@@ -58,6 +60,6 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
   }
 
   deleteUser(id) {
-    // this.store.dispatch(new RequestDeleteUser(id));
+    this.store.dispatch(new RequestDeleteUser(id));
   }
 }

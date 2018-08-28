@@ -8,7 +8,7 @@ import {
   USER_EDIT_SUCCESS, REQUEST_EDIT_USER
 } from './users.actions';
 import { HandledErrorResponse } from '../../core/response.model';
-import { StateHelper } from '../../core/state.helper';
+import { StateHelper, MetaState } from '../../core/state.helper';
 
 export interface UsersReducerState {
   users(state: UsersFeatureState, action: UserAction): UsersFeatureState;
@@ -21,21 +21,11 @@ export interface UsersState {
 export interface UsersFeatureState {
   usersList: UserModel[];
   meta: MetaState<UserModel>;
-  editingUser: UserModel;
-  usersBusy: boolean;
-  usersError: HandledErrorResponse;
 }
-export interface MetaState<T> {
-  progress?: { [key: string]: boolean };
-  error?: { [key: string]: HandledErrorResponse };
-  editingModel?: T;
-}
+
 export const initialUsersFeatureState: UsersFeatureState = {
   usersList: [],
-  meta: {},
-  editingUser: null,
-  usersBusy: false,
-  usersError: null
+  meta: {}
 };
 
 export const usersReducer = (pstate: UsersFeatureState = initialUsersFeatureState, action: UserAction): UsersFeatureState => {

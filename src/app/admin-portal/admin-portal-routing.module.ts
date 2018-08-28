@@ -23,6 +23,11 @@ const routes: Routes = [{
     path: 'users',
     data: { title: 'Users' },
     loadChildren: './users/users.module#UsersModule'
+  },
+  {
+    path: 'gallery',
+    data: { title: 'Gallery' },
+    loadChildren: './gallery/gallery.module#GalleryModule'
   }]
 }];
 

@@ -1,0 +1,11 @@
+<b-toolbar>
+  <a class="btn btn-outline-primary active" routerLink="/admin/gallery/create"><i class="fa fa-plus"></i> Add</a>
+</b-toolbar>
+<div *ngFor="let row of rows">
+  {{row.name}}
+</div>
+<div *ngIf="!rows.length" class="alert alert-light text-center">{{emptyText}}</div>
+<b-toolbar footer="true">
+  <a class="btn btn-outline-primary active" href="javascript:void(0)" (click)="loadGallery()"><i class="fa fa-refresh"></i> Refresh</a>
+</b-toolbar>
+<b-error-panel [errorResponse]="errorResponse$"></b-error-panel>

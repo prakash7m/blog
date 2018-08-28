@@ -11,7 +11,7 @@ import { RowsResponse, DataResponse } from '../../core/response.model';
 import { UserModel } from '../../core/user.model';
 import { UsersFeatureState } from './users.reducer';
 import { UserCreateModel } from '../users.model';
-import { Observable, ObservableInput } from '../../../../../node_modules/rxjs';
+import { Observable, ObservableInput } from 'rxjs';
 
 
 /**

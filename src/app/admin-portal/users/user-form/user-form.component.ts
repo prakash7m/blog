@@ -25,10 +25,14 @@ import { StateHelper } from '../../core/state.helper';
 export class UserFormComponent extends FormBase<UserModel> implements OnInit {
   formGroup: FormGroup;
   featureState$ = StateHelper.stateForFeature(this.store, 'usersFeature', 'users');
-  // errorResponse$ = this.store.select('usersFeature').map((state: UsersState) => state.users.usersError);
   errorResponse$ = StateHelper.errorFor(this.featureState$, [REQUEST_LOAD_USER, REQUEST_CREATE_USER, REQUEST_EDIT_USER]);
   busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, [REQUEST_LOAD_USER, REQUEST_CREATE_USER, REQUEST_EDIT_USER]);
   editingItem$ = StateHelper.editingModelFor(this.featureState$);
+  busyMessages: {[key: string]: string} = {
+    [REQUEST_LOAD_USER]: 'Loading user',
+    [REQUEST_CREATE_USER]: 'Creating user',
+    [REQUEST_EDIT_USER]: 'Editing user'    
+  }
   constructor(route: ActivatedRoute, private fb: FormBuilder, private store: Store<any>) {
     super(route);
   }

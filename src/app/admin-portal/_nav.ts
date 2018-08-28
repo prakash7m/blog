@@ -14,6 +14,11 @@ export const navItems = [
     icon: 'icon-user'
   },
   {
+    name: 'Gallery',
+    url: '/admin/gallery',
+    icon: 'icon-camera'
+  },
+  {
     name: 'Posts',
     url: '/admin/posts',
     icon: 'icon-puzzle',

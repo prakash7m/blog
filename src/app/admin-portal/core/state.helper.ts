@@ -113,12 +113,12 @@ export class StateHelper {
         observables.push(this.progressFor(stateObservable, k));
       });
       return combineLatest(...observables, (...value) => {
-        return value.some(v => v === true);
+        return value.filter(v => !!v)[0];
       });
     }
     return stateObservable.map(state => {
       if (state.meta && state.meta.progress) {
-        return state.meta.progress[key];
+        return state.meta.progress[key] ? key : false;
       }
       return false;
     });
@@ -168,4 +168,11 @@ export class StateHelper {
       return null;
     });
   }
+}
+
+
+export interface MetaState<T> {
+  progress?: { [key: string]: boolean };
+  error?: { [key: string]: HandledErrorResponse };
+  editingModel?: T;
 }

@@ -2,7 +2,7 @@
   <a class="btn btn-outline-primary active" routerLink="/admin/users/create"><i class="fa fa-plus"></i> Add</a>
 </b-toolbar>
 <b-data-grid [columns]="columns" [rows]="rows" [emptyText]="emptyText"
-  [errorMessage]="errorMessage" [actions]="actions" [bMask]="busy$">
+  [errorMessage]="errorMessage" [actions]="actions" [bMask]="busy$" [bMessages]="busyMessages">
   <div class="small">
     <div *ngFor="let row of rows" class="card card-accent-primary">
       <div class="card-header">
