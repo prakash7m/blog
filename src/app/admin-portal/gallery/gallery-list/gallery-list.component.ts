@@ -17,8 +17,14 @@ export class GalleryListComponent extends DataGridClass<any> implements OnInit {
   busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, []);
   errorResponse$: Observable<HandledErrorResponse> = StateHelper.errorFor(this.featureState$, []);
   busyMessages: {[key: string]: string} = {
-    ['test']: "Loading gallery",
-    ['t']: "Deleting image"
+    ['test']: 'Loading gallery',
+    ['t']: 'Deleting image'
+  };
+  afuConfig = {
+    formatsAllowed: '.jpg,.png',
+    uploadAPI: {
+      url: 'https://example-file-upload-api'
+    }
   };
   constructor(private usersService: GalleryService, private store: Store<any>) {
     super();

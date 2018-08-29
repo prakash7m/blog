@@ -31,8 +31,8 @@ export class UserFormComponent extends FormBase<UserModel> implements OnInit {
   busyMessages: {[key: string]: string} = {
     [REQUEST_LOAD_USER]: 'Loading user',
     [REQUEST_CREATE_USER]: 'Creating user',
-    [REQUEST_EDIT_USER]: 'Editing user'    
-  }
+    [REQUEST_EDIT_USER]: 'Editing user'
+  };
   constructor(route: ActivatedRoute, private fb: FormBuilder, private store: Store<any>) {
     super(route);
   }
