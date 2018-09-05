@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AngularFileUploaderModule } from 'angular-file-uploader';
+import { ngfModule, ngf } from 'angular-file';
 
 import { GalleryRoutingModule } from './gallery-routing.module';
 import { GalleryComponent } from './gallery.component';
@@ -21,11 +21,11 @@ import { GalleryEffect } from './store/gallery.effects';
     GalleryRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    ngfModule,
     StoreModule.forFeature('galleryFeature', {
       gallery: galleryReducer
     }),
-    EffectsModule.forFeature([GalleryEffect]),
-    AngularFileUploaderModule
+    EffectsModule.forFeature([GalleryEffect])
   ],
   providers: [GalleryService],
   declarations: [GalleryComponent, GalleryListComponent, GalleryFormComponent]
