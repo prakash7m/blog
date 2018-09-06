@@ -5,7 +5,8 @@ import { HandledErrorResponse } from '../../core/response.model';
 import { Store } from '@ngrx/store';
 import { DataGridClass } from '../../core/data-grid/data-grid.class';
 import { GalleryService } from '../gallery.service';
-import { RequestLoadGallery, RequestDeleteGallery } from '../store/gallery.actions';
+import { RequestLoadGallery, RequestDeleteGallery, REQUEST_LOAD_GALLERY, REQUEST_DELETE_GALLERY, REQUEST_EDIT_GALLERY } from '../store/gallery.actions';
+import { mediaURL } from '../../config';
 
 @Component({
   selector: 'b-gallery-list',
@@ -14,17 +15,12 @@ import { RequestLoadGallery, RequestDeleteGallery } from '../store/gallery.actio
 })
 export class GalleryListComponent extends DataGridClass<any> implements OnInit {
   featureState$ = StateHelper.stateForFeature(this.store, 'galleryFeature', 'gallery');
-  busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, []);
-  errorResponse$: Observable<HandledErrorResponse> = StateHelper.errorFor(this.featureState$, []);
+  busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, [REQUEST_LOAD_GALLERY, REQUEST_DELETE_GALLERY, REQUEST_EDIT_GALLERY]);
+  errorResponse$: Observable<HandledErrorResponse> = StateHelper.errorFor(this.featureState$, [REQUEST_LOAD_GALLERY, REQUEST_DELETE_GALLERY, REQUEST_EDIT_GALLERY]);
   busyMessages: {[key: string]: string} = {
-    ['test']: 'Loading gallery',
-    ['t']: 'Deleting image'
-  };
-  afuConfig = {
-    formatsAllowed: '.jpg,.png',
-    uploadAPI: {
-      url: 'https://example-file-upload-api'
-    }
+    [REQUEST_LOAD_GALLERY]: 'Loading gallery',
+    [REQUEST_DELETE_GALLERY]: 'Deleting image',
+    [REQUEST_EDIT_GALLERY]: 'Editing image'
   };
   constructor(private usersService: GalleryService, private store: Store<any>) {
     super();
@@ -47,4 +43,7 @@ export class GalleryListComponent extends DataGridClass<any> implements OnInit {
     this.store.dispatch(new RequestDeleteGallery(id));
   }
 
+  getMedia(file) {
+    return `${mediaURL}/${file.filename}`;
+  }
 }

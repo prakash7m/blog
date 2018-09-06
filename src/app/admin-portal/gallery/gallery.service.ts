@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpRequest } from "@angular/common/http";
 import { GlobalErrorHandler } from "../core/global-error-handler";
 import { Observable } from "rxjs/Observable";
 import { RowsResponse, HandledErrorResponse, DataResponse } from "../core/response.model";
@@ -9,6 +9,13 @@ import { apiURL } from "../config";
 @Injectable()
 export class GalleryService {
   constructor(private http: HttpClient, private globalErrorHandler: GlobalErrorHandler) { }
+
+  upload(sendableFormData: FormData) {
+    return this.http.post(`${apiURL}/gallery`, sendableFormData, {
+      withCredentials: true,
+      reportProgress: true
+    });
+  }
 
   getGallery(): Observable<RowsResponse<GalleryModel> | HandledErrorResponse> {
     return this.http.get<RowsResponse<GalleryModel>>(`${apiURL}/gallery`, { withCredentials: true })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { HttpEvent, HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { apiURL } from '../../config';
+import { GalleryService } from '../gallery.service';
 
 @Component({
   selector: 'b-gallery-form',
@@ -12,7 +13,6 @@ export class GalleryFormComponent implements OnInit {
   accept = '*';
   files: File[] = [];
   progress: number;
-  url = `${apiURL}/gallery`;
   hasBaseDropZoneOver = false;
   httpEmitter: Subscription;
   httpEvent: HttpEvent<{}>;
@@ -21,7 +21,7 @@ export class GalleryFormComponent implements OnInit {
 
   sendableFormData: FormData;
 
-  constructor(public httpClient: HttpClient) { }
+  constructor(private galleryService: GalleryService) { }
 
   ngOnInit() {
   }
@@ -35,23 +35,13 @@ export class GalleryFormComponent implements OnInit {
   }
 
   uploadFiles(files: File[]): Subscription {
-    const req = new HttpRequest<FormData>('POST', this.url, this.sendableFormData, {
-      withCredentials: true,
-      reportProgress: true // ,responseType: 'text'
-    });
-
-    return this.httpEmitter = this.httpClient.request(req)
-      .subscribe(
-        event => {
-          this.httpEvent = event;
-
-          if (event instanceof HttpResponse) {
-            delete this.httpEmitter;
-            console.log('request done', event);
-          }
-        },
-        error => console.log('Error Uploading', error)
-      );
+    return this.httpEmitter = this.galleryService.upload(this.sendableFormData)
+      .subscribe((event: HttpEvent<{}>) => {
+        this.httpEvent = event;
+        if (event instanceof HttpResponse) {
+          delete this.httpEmitter;
+        }
+      });
   }
 
   getDate() {
