@@ -35,13 +35,16 @@ export class GalleryFormComponent implements OnInit {
   }
 
   uploadFiles(files: File[]): Subscription {
-    return this.httpEmitter = this.galleryService.upload(this.sendableFormData)
+    this.httpEmitter = this.galleryService.upload(this.sendableFormData)
       .subscribe((event: HttpEvent<{}>) => {
         this.httpEvent = event;
+        console.log(this.httpEvent);
         if (event instanceof HttpResponse) {
           delete this.httpEmitter;
         }
       });
+    console.log(this.httpEmitter);
+    return this.httpEmitter;
   }
 
   getDate() {

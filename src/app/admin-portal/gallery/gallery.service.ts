@@ -1,20 +1,21 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpRequest } from "@angular/common/http";
-import { GlobalErrorHandler } from "../core/global-error-handler";
-import { Observable } from "rxjs/Observable";
-import { RowsResponse, HandledErrorResponse, DataResponse } from "../core/response.model";
-import { GalleryModel } from "./gallery.model";
-import { apiURL } from "../config";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpRequest } from '@angular/common/http';
+import { GlobalErrorHandler } from '../core/global-error-handler';
+import { Observable } from 'rxjs/Observable';
+import { RowsResponse, HandledErrorResponse, DataResponse } from '../core/response.model';
+import { GalleryModel } from './gallery.model';
+import { apiURL } from '../config';
 
 @Injectable()
 export class GalleryService {
   constructor(private http: HttpClient, private globalErrorHandler: GlobalErrorHandler) { }
 
   upload(sendableFormData: FormData) {
-    return this.http.post(`${apiURL}/gallery`, sendableFormData, {
-      withCredentials: true,
-      reportProgress: true
+    const config = new HttpRequest('POST', `${apiURL}/gallery`, sendableFormData, {
+      reportProgress: true,
+      withCredentials: true
     });
+    return this.http.request(config);
   }
 
   getGallery(): Observable<RowsResponse<GalleryModel> | HandledErrorResponse> {
