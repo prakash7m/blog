@@ -9,10 +9,12 @@
         <div class="col-sm-6 col-md-4 col-xl-3" *ngFor="let row of rows" >
           <div class="card">
             <div class="card-header"><a href="{{getMedia(row)}}" target="_blank">{{row.name}}</a></div>
-            <div class="card-body cover-image" [style.backgroundImage]="'url(' +
-              getMedia(row) + ')'">
-
-            </div>
+            <div class="bg">
+              <div class="card-body cover-image" [style.backgroundImage]="'url(' +
+                getMedia(row) + ')'" (click)="editVisible=row._id">                
+              </div>
+              <b-image-edit *ngIf="editVisible==row._id" [image]="row" (cancel)="editVisible=null"></b-image-edit>
+            </div>            
             <div class="footer">
               <span class="badge badge-secondary" *ngFor="let tag of row.tags">{{tag}}</span>
             </div>

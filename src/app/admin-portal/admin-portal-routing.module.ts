@@ -28,6 +28,11 @@ const routes: Routes = [{
     path: 'gallery',
     data: { title: 'Gallery' },
     loadChildren: './gallery/gallery.module#GalleryModule'
+  },
+  {
+    path: 'category',
+    data: { title: 'Category' },
+    loadChildren: './categories/categories.module#CategoriesModule'
   }]
 }];
 

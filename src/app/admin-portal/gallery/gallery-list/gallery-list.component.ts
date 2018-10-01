@@ -15,12 +15,10 @@ import { mediaURL } from '../../config';
 })
 export class GalleryListComponent extends DataGridClass<any> implements OnInit {
   featureState$ = StateHelper.stateForFeature(this.store, 'galleryFeature', 'gallery');
-  busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, [REQUEST_LOAD_GALLERY, REQUEST_DELETE_GALLERY, REQUEST_EDIT_GALLERY]);
+  busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, [REQUEST_LOAD_GALLERY]);
   errorResponse$: Observable<HandledErrorResponse> = StateHelper.errorFor(this.featureState$, [REQUEST_LOAD_GALLERY, REQUEST_DELETE_GALLERY, REQUEST_EDIT_GALLERY]);
   busyMessages: {[key: string]: string} = {
-    [REQUEST_LOAD_GALLERY]: 'Loading gallery',
-    [REQUEST_DELETE_GALLERY]: 'Deleting image',
-    [REQUEST_EDIT_GALLERY]: 'Editing image'
+    [REQUEST_LOAD_GALLERY]: 'Loading gallery'
   };
   constructor(private usersService: GalleryService, private store: Store<any>) {
     super();
@@ -45,5 +43,9 @@ export class GalleryListComponent extends DataGridClass<any> implements OnInit {
 
   getMedia(file) {
     return `${mediaURL}/${file.filename}`;
+  }
+
+  onImageUpdate(row) {
+    console.log(row);
   }
 }

@@ -19,6 +19,11 @@ export const navItems = [
     icon: 'icon-camera'
   },
   {
+    name: 'Category',
+    url: '/admin/category',
+    icon: 'icon-layers'
+  },
+  {
     name: 'Posts',
     url: '/admin/posts',
     icon: 'icon-puzzle',

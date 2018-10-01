@@ -131,3 +131,8 @@ fieldset {
 .btn {
   border-radius: 0px;
 }
+
+a:not([href]):not([tabindex]) {
+  color: #fff;
+  text-decoration: none;
+}

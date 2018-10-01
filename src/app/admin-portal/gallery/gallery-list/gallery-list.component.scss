@@ -7,10 +7,18 @@
     margin-bottom: 7px !important;
   }
 }
+.bg {
+  overflow: hidden;
+  position: relative;
+}
 .cover-image {
   background-position: center;
   background-size: cover;
-  height: 200px;  
+  height: 200px;
+  transition: all .5s;
+  &:hover {
+    transform: scale(1.2);
+  }  
 }
 .footer {
   padding: 10px;

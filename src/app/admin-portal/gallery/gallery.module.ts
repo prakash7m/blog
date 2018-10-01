@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { galleryReducer } from './store/gallery.reducer';
 import { GalleryEffect } from './store/gallery.effects';
+import { ImageEditComponent } from './image-edit/image-edit.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,6 @@ import { GalleryEffect } from './store/gallery.effects';
     EffectsModule.forFeature([GalleryEffect])
   ],
   providers: [GalleryService],
-  declarations: [GalleryComponent, GalleryListComponent, GalleryFormComponent]
+  declarations: [GalleryComponent, GalleryListComponent, GalleryFormComponent, ImageEditComponent]
 })
 export class GalleryModule { }
