@@ -39,8 +39,8 @@ export class UserListComponent extends DataGridClass<UserModel> implements OnIni
   busy$: Observable<boolean> = StateHelper.progressFor(this.featureState$, [REQUEST_LOAD_USERS, REQUEST_DELETE_USER]);
   errorResponse$: Observable<HandledErrorResponse> = StateHelper.errorFor(this.featureState$, [REQUEST_LOAD_USERS, REQUEST_DELETE_USER]);
   busyMessages: {[key: string]: string} = {
-    [REQUEST_LOAD_USERS]: "Loading users",
-    [REQUEST_DELETE_USER]: "Deleting user"
+    [REQUEST_LOAD_USERS]: 'Loading users',
+    [REQUEST_DELETE_USER]: 'Deleting user'
   };
   constructor(private usersService: UsersService, private store: Store<UsersFeatureState>) {
     super();

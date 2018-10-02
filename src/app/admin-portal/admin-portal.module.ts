@@ -9,6 +9,7 @@ import {
   AppFooterModule,
   AppSidebarModule,
 } from '@coreui/angular';
+
 import { AdminPortalRoutingModule } from './admin-portal-routing.module';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

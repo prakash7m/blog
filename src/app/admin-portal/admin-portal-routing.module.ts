@@ -33,6 +33,11 @@ const routes: Routes = [{
     path: 'category',
     data: { title: 'Category' },
     loadChildren: './categories/categories.module#CategoriesModule'
+  },
+  {
+    path: 'posts',
+    data: { title: 'Posts' },
+    loadChildren: './posts/posts.module#PostsModule'
   }]
 }];
 

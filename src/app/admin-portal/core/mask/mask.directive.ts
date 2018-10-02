@@ -9,7 +9,7 @@ import { text } from '@angular/core/src/render3/instructions';
 export class MaskDirective implements OnInit {
   @Input() bMask: Observable<boolean>;
   @Input() bMessages: {[key: string]: string} = {};
-  defaultMessage: string = "Operation in progress";
+  defaultMessage = 'Operation in progress';
   maskEl: any;
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 

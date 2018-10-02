@@ -26,6 +26,11 @@ export const navItems = [
   {
     name: 'Posts',
     url: '/admin/posts',
+    icon: 'icon-puzzle'
+  },
+  {
+    name: 'Posts',
+    url: '/admin/posts',
     icon: 'icon-puzzle',
     children: [
       {

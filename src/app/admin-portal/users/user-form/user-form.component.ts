@@ -62,7 +62,7 @@ export class UserFormComponent extends FormBase<UserModel> implements OnInit {
   loadForm(id) {
     this.store.dispatch(new RequestLoadUser(id));
   }
-  
+
   submitCreateForm() {
     const user = {
       username: this.formGroup.get('username').value,
